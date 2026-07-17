@@ -12,6 +12,7 @@ def statToEmbed( bot: "commands.Bot", guild: discord.Guild ):
         d = json.load( f )
 
     embed = discord.Embed( title = "통계" )
+    embed2 = discord.Embed( title = "통계 (2페이지)" )
 
     i = 1
     for id, char_and_msg in sorted( d[ id ].items(), key = lambda x: x[1], reverse = True ):  # type: ignore
@@ -24,11 +25,22 @@ def statToEmbed( bot: "commands.Bot", guild: discord.Guild ):
         char = char_and_msg[ "characters" ]
         msg = char_and_msg[ "messages" ]
 
-        embed.add_field(
-            name = f"#{ i } { userName } (`@{ userId }`)",
-            value = f"{ char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)",
-            inline = False
-        )
+        if i <= 25:
+            embed.add_field(
+                name = f"#{ i } { userName } (`@{ userId }`)",
+                value = f"{ char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)",
+                inline = False
+            )
+        else:
+            embed2.add_field(
+                name = f"#{ i } { userName } (`@{ userId }`)",
+                value = f"{ char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)",
+                inline = False
+            )
+
         i += 1
 
-    return embed
+    if i <= 26:
+        return [ embed ]
+    else:
+        return [ embed, embed2 ]

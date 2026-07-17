@@ -13,7 +13,7 @@ BOT = commands.Bot( command_prefix = "", intents = INTENTS )
 @BOT.event
 async def on_ready():
     TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1022402783485370398 )  # type: ignore
-    await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
+    # await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
     await BOT.add_cog( RegisterSubaccountCog(), override = True )
 
@@ -33,12 +33,10 @@ async def on_message( msg: discord.Message ):
     if msg.guild is None:
         return
 
-    print( msg.content )
-    
     addNumber( msg.guild.id, msg.author.id, numChar( msg.content ) )
 
     if msg.content == "통계":
-        await msg.reply( embed = statToEmbed( BOT, msg.guild ) )
+        await msg.reply( embeds = statToEmbed( BOT, msg.guild ) )
 
 
 load_dotenv( "../.env" )
