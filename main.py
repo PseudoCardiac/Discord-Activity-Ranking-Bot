@@ -1,12 +1,9 @@
 import discord, os, datetime
-from discord.ext import tasks, commands
+from discord.ext import commands
 from dotenv import load_dotenv
 
-from cogs.task import TaskCog
-from cogs.notif_channel_config import NotifChannelConfigCog
-from utils.add_number import addNumber
-from utils.stat_to_embed import statToEmbed
-from utils.num_char import numChar
+from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog
+from utils import addNumber, statToEmbed, numChar
 
 
 INTENTS = discord.Intents.all()
@@ -18,6 +15,9 @@ async def on_ready():
     TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1022402783485370398 )  # type: ignore
     await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
+    await BOT.add_cog( RegisterSubaccountCog(), override = True )
+
+    await BOT.tree.sync()
 
     print( "Activity Ranker Currently Running On:" )
     print()
