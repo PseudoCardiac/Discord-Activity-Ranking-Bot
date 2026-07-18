@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 def statToEmbed( bot: "commands.Bot", guild: discord.Guild ):
     d: dict[ str, dict[ str, dict[ str, int ] ] ] = {}
-    id = str( guild.id )
+    guildId = str( guild.id )
 
     with open( "data/stat.json", 'r', encoding = "UTF-8" ) as f:
         d = json.load( f )
@@ -15,25 +15,29 @@ def statToEmbed( bot: "commands.Bot", guild: discord.Guild ):
     embed2 = discord.Embed( title = "통계 (2페이지)" )
 
     i = 1
-    for id, char_and_msg in sorted( d[ id ].items(), key = lambda x: x[1], reverse = True ):  # type: ignore
-        user = bot.get_user( int( id ) )
+    for userId, stat in sorted( d.items(), key = lambda x: x[1][ "characters" ], reverse = True ):  # type: ignore
+        user = bot.get_user( int( userId ) )
         if user is None:
             continue
 
-        userName = user.display_name
-        userId = user.name
-        char = char_and_msg[ "characters" ]
-        msg = char_and_msg[ "messages" ]
+        userDisplayName = user.display_name
+        userName = user.name
+        char = stat.get( "characters" ) or 0
+        msg = stat.get( "messages" ) or 0
+        voice = stat.get( "voice" ) or 0
+        stream = stat.get( "stream" ) or 0
 
         if i <= 25:
             embed.add_field(
-                name = f"#{ i } { userName } (`@{ userId }`)",
-                value = f"{ char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)",
+                name = f"#{ i } { userDisplayName } (`@{ userName }`)",
+                value = f"텍스트 | { char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)\n" + \
+                        f"보이스 | { voice }초\n" + \
+                        f"라이브 | { stream }초",
                 inline = False
             )
         else:
             embed2.add_field(
-                name = f"#{ i } { userName } (`@{ userId }`)",
+                name = f"#{ i } { userDisplayName } (`@{ userName }`)",
                 value = f"{ char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)",
                 inline = False
             )
