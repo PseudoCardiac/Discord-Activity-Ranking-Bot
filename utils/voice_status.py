@@ -31,6 +31,9 @@ def addVoiceTime( id: str ):
     timeDelta = datetime.datetime.now() - datetime.datetime.strptime( joinTime, "%d/%m/%Y, %H:%M:%S" )
     seconds = timeDelta.seconds
 
+    if not statDict.get( id ):
+        statDict[ id ] = {}
+
     if statDict[ id ].get( "voice" ):
         statDict[ id ][ "voice" ] += seconds
     else:
@@ -70,6 +73,9 @@ def addStreamTime( id: str ):
     timeDelta = datetime.datetime.now() - datetime.datetime.strptime( startTime, "%d/%m/%Y, %H:%M:%S" )
     seconds = timeDelta.seconds
 
+    if not statDict.get( id ):
+        statDict[ id ] = {}
+        
     if statDict[ id ].get( "stream" ):
         statDict[ id ][ "stream" ] += seconds
     else:
