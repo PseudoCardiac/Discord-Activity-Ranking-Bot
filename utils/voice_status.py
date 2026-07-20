@@ -29,15 +29,15 @@ def addVoiceTime( id: str ):
         return
 
     timeDelta = datetime.datetime.now() - datetime.datetime.strptime( joinTime, "%d/%m/%Y, %H:%M:%S" )
-    seconds = timeDelta.seconds
+    minutes = timeDelta.seconds // 60
 
     if not statDict.get( id ):
         statDict[ id ] = {}
 
     if statDict[ id ].get( "voice" ):
-        statDict[ id ][ "voice" ] += seconds
+        statDict[ id ][ "voice" ] += minutes
     else:
-        statDict[ id ][ "voice" ] = seconds
+        statDict[ id ][ "voice" ] = minutes
 
     with open( "data/stat.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( statDict, f, indent = 4 )
@@ -71,15 +71,15 @@ def addStreamTime( id: str ):
         return
 
     timeDelta = datetime.datetime.now() - datetime.datetime.strptime( startTime, "%d/%m/%Y, %H:%M:%S" )
-    seconds = timeDelta.seconds
+    minutes = timeDelta.seconds // 60
 
     if not statDict.get( id ):
         statDict[ id ] = {}
         
     if statDict[ id ].get( "stream" ):
-        statDict[ id ][ "stream" ] += seconds
+        statDict[ id ][ "stream" ] += minutes
     else:
-        statDict[ id ][ "stream" ] = seconds
+        statDict[ id ][ "stream" ] = minutes
 
     with open( "data/stat.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( statDict, f, indent = 4 )
