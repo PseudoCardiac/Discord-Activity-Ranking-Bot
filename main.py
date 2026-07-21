@@ -1,9 +1,9 @@
-import discord, os, datetime
+import discord, os
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog
-from utils import addNumber, statToEmbed, numChar, recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
+from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog, ManageRolesCog
+from utils import addNumber, rankingToEmbed, numChar, recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
 
 
 INTENTS = discord.Intents.all()
@@ -12,13 +12,14 @@ BOT = commands.Bot( command_prefix = "", intents = INTENTS )
 
 @BOT.event
 async def on_ready():
-    TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1022402783485370398 )  # type: ignore
+    # TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1022402783485370398 )  # type: ignore
     # await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
     await BOT.add_cog( RegisterSubaccountCog(), override = True )
     await BOT.add_cog( StatCog( BOT ), override = True  )
+    await BOT.add_cog( ManageRolesCog( BOT ), override = True  )
 
-    await BOT.tree.sync()
+    # await BOT.tree.sync()
 
     print( "Activity Ranker Currently Running On:" )
     print()
@@ -40,7 +41,7 @@ async def on_message( msg: discord.Message ):
     addNumber( msg.guild.id, msg.author.id, numChar( msg.content ) )
 
     if msg.content == "통계":
-        await msg.reply( embeds = statToEmbed( BOT, msg.guild ) )
+        await msg.reply( embeds = rankingToEmbed( BOT, msg.guild ) )
 
 
 @BOT.event

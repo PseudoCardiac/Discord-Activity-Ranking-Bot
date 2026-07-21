@@ -1,6 +1,6 @@
 import discord, json
 from discord.ext.commands import Bot, Cog
-from utils import statToEmbed, statReset
+from utils import rankingToEmbed, statReset
 
 
 class StatCog( Cog ):
@@ -13,9 +13,11 @@ class StatCog( Cog ):
         if not i.guild:
             return
 
-        await i.response.send_message( embeds = statToEmbed( self.bot, i.guild ) )
+        await i.response.send_message( embeds = rankingToEmbed( self.bot, i.guild ) )
 
 
     @discord.app_commands.command( name = "통계_초기화", description = "통계를 초기화한다" )
     async def statReset( self, i: discord.Interaction ):
         statReset()
+
+        await i.response.send_message( "통계 초기화됨" )

@@ -20,8 +20,15 @@ def addNumber( guildId, memberId, number ):
 
     if statDict.get( memberId ) is None:
         statDict[ memberId ] = { "characters": number, "messages": 1 }
+
+    if statDict[ memberId ].get( "characters" ) is None:
+        statDict[ memberId ][ "characters" ] = number
     else:
         statDict[ memberId ][ "characters" ] += number
+
+    if statDict[ memberId ].get( "messages" ) is None:
+        statDict[ memberId ][ "messages" ] = 1
+    else:
         statDict[ memberId ][ "messages" ] += 1
 
     with open( "data/stat.json", 'w', encoding = "UTF-8" ) as f:

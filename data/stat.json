@@ -1,20 +1,32 @@
 {
+    "464784467391676436": {
+        "voice": 900,
+        "characters": 7720,
+        "messages": 2,
+        "stream": 0
+    },
     "513676568745213953": {
-        "characters": 86,
-        "messages": 24,
-        "voice": 3710,
-        "stream": 8
-    },
-    "632152187962785793": {
-        "characters": 2,
-        "messages": 1
-    },
-    "998149441171226624": {
-        "characters": 110,
-        "messages": 8
+        "characters": 6670,
+        "voice": 3480
     },
     "289968032527155200": {
-        "characters": 387,
-        "messages": 29
+        "characters": 5000,
+        "voice": 900
+    },
+    "959444124992434188": {
+        "characters": 3650,
+        "voice": 360
+    },
+    "632152187962785793": {
+        "characters": 2560,
+        "voice": 1440
+    },
+    "749919908988452874": {
+        "characters": 950,
+        "voice": 1740
+    },
+    "506057456158507019": {
+        "characters": 270,
+        "voice": 1440
     }
 }
