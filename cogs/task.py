@@ -1,6 +1,7 @@
 import discord, datetime
 from zoneinfo import ZoneInfo
 from discord.ext import commands, tasks
+from utils import rankingToEmbed, statReset
 
 
 MIDNIGHT = datetime.time(
@@ -15,10 +16,13 @@ class TaskCog( commands.Cog ):
         self.testChannel = testChannel
         self.checkDay.start()
 
+
     @tasks.loop( time = MIDNIGHT )
     async def checkDay( self ):
-        isMonday = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).weekday() == 0
+        # isMonday = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).weekday() == 0
 
-        # 통계 내기 + 기록 초기화
-        if isMonday:
-            pass
+        # if not isMonday:
+        #     return
+
+        await self.testChannel.send( embeds = rankingToEmbed( self.bot ) )
+        statReset()

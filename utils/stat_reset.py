@@ -1,11 +1,15 @@
 import json
+from .stat_to_simple_ranking import statToSimpleRanking
 
 
 def statReset():
-    statDict: dict[ str, dict[ str, int ] ] = {}
+    """
+    순위를 `ranking_prev.json`으로 옮기고 리셋한다.
+    """
+    ranking = statToSimpleRanking()
 
-    with open( "data/stat.json", 'r', encoding = "UTF-8" ) as f:
-        statDict = json.load( f )
+    with open( "data/prev_ranking.json", 'w', encoding = "UTF-8" ) as f:
+        json.dump( ranking, f, indent = 4 )
 
     statDict = {}
 

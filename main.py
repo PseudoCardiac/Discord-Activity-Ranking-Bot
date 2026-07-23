@@ -12,8 +12,8 @@ BOT = commands.Bot( command_prefix = "", intents = INTENTS )
 
 @BOT.event
 async def on_ready():
-    # TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1022402783485370398 )  # type: ignore
-    # await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
+    TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1471300710581670061 )  # type: ignore
+    await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
     await BOT.add_cog( RegisterSubaccountCog(), override = True )
     await BOT.add_cog( StatCog( BOT ), override = True  )
@@ -41,7 +41,7 @@ async def on_message( msg: discord.Message ):
     addNumber( msg.guild.id, msg.author.id, numChar( msg.content ) )
 
     if msg.content == "통계":
-        await msg.reply( embeds = rankingToEmbed( BOT, msg.guild ) )
+        await msg.reply( embeds = rankingToEmbed( BOT ) )
 
 
 @BOT.event
@@ -51,30 +51,30 @@ async def on_voice_state_update( member: discord.Member, before: discord.VoiceSt
 
     # on member join
     if before.channel is None and after.channel is not None:
-        print( f"{ member.display_name } { after.channel.name } 음성 채널에 참가" )
+        # print( f"{ member.display_name } { after.channel.name } 음성 채널에 참가" )
         recordVoiceJoin( str( member.id ) )
 
     # on member leave
     elif before.channel is not None and after.channel is None:
-        print( f"{ member.display_name } { before.channel.name } 음성 채널에서 나감" )
+        # print( f"{ member.display_name } { before.channel.name } 음성 채널에서 나감" )
         addVoiceTime( str( member.id ) )
 
         if before.self_stream or before.self_video:
             addStreamTime( str( member.id ) )
 
     # on member move
-    elif before.channel is not None and after.channel is not None and before.channel != after.channel:
-        print( f"{ member.display_name } { before.channel.name } 음성 채널에서 { after.channel.name } 으로 이동" )
+    # elif before.channel is not None and after.channel is not None and before.channel != after.channel:
+        # print( f"{ member.display_name } { before.channel.name } 음성 채널에서 { after.channel.name } 으로 이동" )
 
     # on member live / video start
     if ( not before.self_stream and not before.self_video ) and ( after.self_stream or after.self_video ) and after.channel:
-        print( f"{ member.display_name } { after.channel.name } 음성 채널에서 스트리밍 시작" )
+        # print( f"{ member.display_name } { after.channel.name } 음성 채널에서 스트리밍 시작" )
         recordStreamStart( str( member.id ) )
 
     # on member live / video end
     # WARN: 음성 채널에서 나가면서 스트리밍이 종료된 경우, 이 이벤트가 발생하지 않음
     if ( before.self_stream or before.self_video ) and ( not after.self_stream and not after.self_video ) and before.channel:
-        print( f"{ member.display_name } { before.channel.name } 음성 채널에서 스트리밍 종료" )
+        # print( f"{ member.display_name } { before.channel.name } 음성 채널에서 스트리밍 종료" )
         addStreamTime( str( member.id ) )
 
 

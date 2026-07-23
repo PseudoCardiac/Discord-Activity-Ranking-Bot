@@ -13,7 +13,7 @@ class StatCog( Cog ):
         if not i.guild:
             return
 
-        await i.response.send_message( embeds = rankingToEmbed( self.bot, i.guild ) )
+        await i.response.send_message( embeds = rankingToEmbed( self.bot ) )
 
 
     @discord.app_commands.command( name = "통계_초기화", description = "통계를 초기화한다" )
