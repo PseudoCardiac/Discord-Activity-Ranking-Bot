@@ -4,6 +4,7 @@ from .ranking_to_embed import rankingToEmbed
 from .voice_status import recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
 from .stat_reset import statReset
 from .stat_to_ranking import statToRanking
+from .reset_record import resetRecord
 
 
 __all__ = [
@@ -15,4 +16,6 @@ __all__ = [
     "recordStreamStart",
     "addStreamTime",
     "statReset",
-    "statToRanking" ]
+    "statToRanking",
+    "resetRecord"
+]

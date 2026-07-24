@@ -3,7 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog, ManageRolesCog
-from utils import addNumber, rankingToEmbed, numChar, recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
+from utils import addNumber, numChar, recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
 
 
 INTENTS = discord.Intents.all()
@@ -35,13 +35,7 @@ async def on_message( msg: discord.Message ):
     if msg.author.bot:
         return
 
-    if msg.guild is None:
-        return
-
     addNumber( msg.guild.id, msg.author.id, numChar( msg.content ) )
-
-    if msg.content == "통계":
-        await msg.reply( embeds = rankingToEmbed( BOT ) )
 
 
 @BOT.event
@@ -50,12 +44,12 @@ async def on_voice_state_update( member: discord.Member, before: discord.VoiceSt
         return
 
     # on member join
-    if before.channel is None and after.channel is not None:
+    if ( before.channel is None and after.channel is not None ) and not after.afk:
         # print( f"{ member.display_name } { after.channel.name } 음성 채널에 참가" )
         recordVoiceJoin( str( member.id ) )
 
     # on member leave
-    elif before.channel is not None and after.channel is None:
+    elif ( before.channel is not None and after.channel is None ) and not before.afk:
         # print( f"{ member.display_name } { before.channel.name } 음성 채널에서 나감" )
         addVoiceTime( str( member.id ) )
 

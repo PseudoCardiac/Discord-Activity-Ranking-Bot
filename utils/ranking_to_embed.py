@@ -19,19 +19,22 @@ def rankingToEmbed( bot: "commands.Bot" ):
     embed = discord.Embed( title = "통계" )
     embed2 = discord.Embed( title = "통계 (2페이지)" )
 
+    MHD: discord.Guild = bot.get_guild( 1020825427025068123 )   # type: ignore
+
     i = 1
 
     for userId, score in ranking:
         if stat.get( userId ) is None:
             continue
 
-        userObj = bot.get_user( int( userId ) )
-        if userObj is None:
+        memberObj = MHD.get_member( int( userId ) )
+        if memberObj is None:
             continue
 
-        userDisplayName = userObj.display_name
+        userDisplayName = memberObj.display_name
         char = stat[ userId ].get( "characters" ) or 0
-        msg = stat[ userId ].get( "messages" ) or 1
+        msg = stat[ userId ].get( "messages" ) or 0
+        charPerMsg = 0.0 if msg == 0 else round( char / msg, 2 )
         voice = stat[ userId ].get( "voice" ) or 0
         stream = stat[ userId ].get( "stream" ) or 0
 
@@ -55,7 +58,7 @@ def rankingToEmbed( bot: "commands.Bot" ):
         if i <= 25:
             embed.add_field(
                 name = f"#{ i } { userDisplayName } · { score }점  { rankDiffText }",
-                value = f"텍스트 | { char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)\n" + \
+                value = f"텍스트 | { char }자, { msg }건 ({ charPerMsg }자/건)\n" + \
                         f"보이스 | { voice }분\n" + \
                         f"라이브 | { stream }분",
                 inline = False
@@ -63,7 +66,7 @@ def rankingToEmbed( bot: "commands.Bot" ):
         else:
             embed2.add_field(
                 name = f"#{ i } { userDisplayName } · { score }점  { rankDiffText }",
-                value = f"텍스트 | { char }자, { msg }건 ({ round( char / msg, 2 ) }자/건)\n" + \
+                value = f"텍스트 | { char }자, { msg }건 ({ charPerMsg }자/건)\n" + \
                         f"보이스 | { voice }분\n" + \
                         f"라이브 | { stream }분",
                 inline = False
