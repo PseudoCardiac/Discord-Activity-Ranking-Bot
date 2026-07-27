@@ -17,7 +17,6 @@ async def on_ready():
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
     await BOT.add_cog( RegisterSubaccountCog(), override = True )
     await BOT.add_cog( StatCog( BOT ), override = True  )
-    await BOT.add_cog( ManageRolesCog( BOT ), override = True  )
 
     # await BOT.tree.sync()
 

@@ -5,6 +5,7 @@ from .voice_status import recordVoiceJoin, addVoiceTime, recordStreamStart, addS
 from .stat_reset import statReset
 from .stat_to_ranking import statToRanking
 from .reset_record import resetRecord
+from .reorder_roles import reorderRoles
 
 
 __all__ = [
@@ -17,5 +18,6 @@ __all__ = [
     "addStreamTime",
     "statReset",
     "statToRanking",
-    "resetRecord"
+    "resetRecord",
+    "reorderRoles"
 ]

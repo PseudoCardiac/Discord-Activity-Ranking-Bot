@@ -9,15 +9,15 @@ class StatCog( Cog ):
 
 
     @discord.app_commands.command( name = "통계", description = "통계를 표시한다" )
-    async def stat( self, i: discord.Interaction ):
-        if not i.guild:
+    async def stat( self, interaction: discord.Interaction ):
+        if not interaction.guild:
             return
 
-        await i.response.send_message( embeds = rankingToEmbed( self.bot ) )
+        await interaction.response.send_message( embeds = rankingToEmbed( self.bot ) )
 
 
     @discord.app_commands.command( name = "통계_초기화", description = "통계를 초기화한다" )
-    async def statReset( self, i: discord.Interaction ):
+    async def statReset( self, interaction: discord.Interaction ):
         statReset()
 
-        await i.response.send_message( "통계 초기화됨" )
+        await interaction.response.send_message( "통계 초기화됨" )

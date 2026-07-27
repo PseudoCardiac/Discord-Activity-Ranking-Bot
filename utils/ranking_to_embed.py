@@ -1,4 +1,5 @@
-import discord, json, math
+import discord, json
+import datetime
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from discord.ext import commands
@@ -16,8 +17,11 @@ def rankingToEmbed( bot: "commands.Bot" ):
     with open( "data/stat.json", 'r', encoding = "UTF-8" ) as f:
         stat = json.load( f )
 
-    embed = discord.Embed( title = "통계" )
-    embed2 = discord.Embed( title = "통계 (2페이지)" )
+    year = ( datetime.datetime.now() - datetime.timedelta( days = 1 ) ).year
+    month = ( datetime.datetime.now() - datetime.timedelta( days = 1 ) ).month
+
+    embed = discord.Embed( title = f"{ year }년 { month }월 통계" )
+    embed2 = discord.Embed( title = f"{ year }년 { month }월 통계 (2페이지)" )
 
     MHD: discord.Guild = bot.get_guild( 1020825427025068123 )   # type: ignore
 
