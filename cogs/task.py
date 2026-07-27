@@ -1,4 +1,4 @@
-import discord, datetime, json
+import discord, datetime
 from zoneinfo import ZoneInfo
 from discord.ext import commands, tasks
 from utils import rankingToEmbed, statReset, reorderRoles
@@ -11,9 +11,9 @@ MIDNIGHT = datetime.time(
 
 
 class TaskCog( commands.Cog ):
-    def __init__( self, bot: commands.Bot, testChannel: discord.TextChannel ):
+    def __init__( self, bot: commands.Bot, notifChannel: discord.TextChannel ):
         self.bot = bot
-        self.testChannel = testChannel
+        self.testChannel = notifChannel
         self.checkDay.start()
 
 

@@ -10,7 +10,7 @@ with open( "data/role.json", 'r', encoding = "UTF-8" ) as f:
 async def reorderRoles( mhd: discord.Guild, pivotRole: discord.Role ):
     simpleRanking: dict[ str, int ] = {}
     with open( "data/prev_ranking.json", 'r', encoding = "UTF-8" ) as f:
-        simpleRanking = json.load( f, indent = 4 )
+        simpleRanking = json.load( f )
 
     simplerRanking: list[ str ] = []
 

@@ -12,8 +12,10 @@ BOT = commands.Bot( command_prefix = "", intents = INTENTS )
 
 @BOT.event
 async def on_ready():
-    TEST_CHANNEL: discord.TextChannel = BOT.get_channel( 1471300710581670061 )  # type: ignore
-    await BOT.add_cog( TaskCog( BOT, TEST_CHANNEL ), override = True )
+    with open( "data/channel.txt", 'r', encoding = "UTF-8" ) as f:
+        notifChannelId = int( f.read() )
+    NOTIF_CHANNEL: discord.TextChannel = BOT.get_channel( notifChannelId )  # type: ignore
+    await BOT.add_cog( TaskCog( BOT, NOTIF_CHANNEL ), override = True )
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
     await BOT.add_cog( RegisterSubaccountCog(), override = True )
     await BOT.add_cog( StatCog( BOT ), override = True  )

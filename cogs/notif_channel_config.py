@@ -5,14 +5,7 @@ from discord.ext.commands import Cog
 class NotifChannelConfigCog( Cog ):
     @discord.app_commands.command( name = "통계_채널_설정", description = "통계 메시지를 전송할 채널을 설정한다" )
     async def notifChannelConfig( self, i: discord.Interaction, channel: discord.TextChannel ):
-        channelDict: dict[ str, str ] = {}
+        with open( "data/channel.txt", 'w', encoding = "UTF-8" ) as f:
+            f.write( str( channel.id ) )
 
-        with open( "data/channel.json", 'r', encoding = "UTF-8" ) as f:
-            channelDict = json.load( f )
-
-        channelDict[ str( i.guild_id ) ] = str( channel.id )
-
-        with open( "data/channel.json", 'w', encoding = "UTF-8" ) as f:
-            json.dump( channelDict, f, indent = 4 )
-
-        await i.response.send_message( channel.name )
+        await i.response.send_message( f"통계 알림 채널 설정됨: { channel.name }" )
