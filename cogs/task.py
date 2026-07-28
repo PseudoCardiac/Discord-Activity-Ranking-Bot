@@ -24,9 +24,10 @@ class TaskCog( commands.Cog ):
         # if not isMonday:
         #     return
 
+        cutVoice()
+
         await self.testChannel.send( embeds = rankingToEmbed( self.bot ) )
 
-        cutVoice()
         statReset()
 
         mhd: discord.Guild = self.bot.get_guild( 1020825427025068123 )  # type: ignore

@@ -2,7 +2,7 @@ import discord, os
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog, ManageRolesCog
+from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog
 from utils import addNumber, numChar, recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
 
 
@@ -22,10 +22,7 @@ async def on_ready():
 
     # await BOT.tree.sync()
 
-    print( "Activity Ranker Currently Running On:" )
-    print()
-    for guild in BOT.guilds:
-        print( f"{ guild.name } ({ str( guild.id ) })" )
+    print( "Activity Ranker" )
 
 
 @BOT.event

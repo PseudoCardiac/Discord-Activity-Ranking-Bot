@@ -1,4 +1,4 @@
-import json, discord
+import json, discord, asyncio
 
 
 roleDict: dict[ str, str ] = {}
@@ -29,7 +29,8 @@ async def reorderRoles( mhd: discord.Guild, pivotRole: discord.Role ):
             continue
         # print( f"role { role.name } found!" )
 
-        await role.move( above = prev, offset = -1 )
+        await role.move( above = prev, offset = 0 )
         # print( f"{ role.name } moved below { prev.name }!" )
+        await asyncio.sleep( 5 )
         prev = role
         # print( f"prev role set to { role.name }!" )

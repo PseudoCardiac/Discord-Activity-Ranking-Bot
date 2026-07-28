@@ -8,10 +8,10 @@ def cutVoice():
     정기 통계를 산출할 때, 점수를 내기 직전에 호출한다.
     """
     # 파일 읽기
-    with open( "voice.json", 'r', encoding = "UTF-8" ) as f:
+    with open( "data/voice.json", 'r', encoding = "UTF-8" ) as f:
         voiceDict: dict[ str, str ] = json.load( f )
 
-    with open( "stream.json", 'r', encoding = "UTF-8" ) as f:
+    with open( "data/stream.json", 'r', encoding = "UTF-8" ) as f:
         streamDict: dict[ str, str ] = json.load( f )
 
     # 1. 기록 중인 보이스와 스트림을 현재 시간에 종료된 것으로 간주하고, 통계에 기록한다.
@@ -25,8 +25,8 @@ def cutVoice():
         streamDict[ id ] = datetime.datetime.now().strftime( "%d/%m/%Y, %H:%M:%S" )
 
     # 파일 쓰기
-    with open( "voice.json", 'w', encoding = "UTF-8" ) as f:
+    with open( "data/voice.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( voiceDict, f, indent = 4 )
 
-    with open( "stream.json", 'w', encoding = "UTF-8" ) as f:
+    with open( "data/stream.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( streamDict, f, indent = 4 )

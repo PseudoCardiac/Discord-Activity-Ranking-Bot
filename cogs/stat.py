@@ -16,8 +16,18 @@ class StatCog( Cog ):
         await interaction.response.send_message( embeds = rankingToEmbed( self.bot ) )
 
 
-    @discord.app_commands.command( name = "통계_초기화", description = "통계를 초기화한다" )
+    @discord.app_commands.command( name = "초기화", description = "모든 기록 파일을 초기화한다" )
     async def statReset( self, interaction: discord.Interaction ):
-        statReset()
+        with open( "data/prev_ranking.json", 'w' ) as f:
+            json.dump( {}, f )
 
-        await interaction.response.send_message( "통계 초기화됨" )
+        with open( "data/stat.json", 'w' ) as f:
+            json.dump( {}, f )
+
+        with open( "data/stream.json", 'w' ) as f:
+            json.dump( {}, f )
+
+        with open( "data/voice.json", 'w' ) as f:
+            json.dump( {}, f )
+        
+        await interaction.response.send_message( "기록 초기화됨" )
