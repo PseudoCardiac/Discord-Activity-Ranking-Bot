@@ -12,10 +12,10 @@ def statToRanking():
         score = 0
 
         if stat.get( "characters" ):
-            score += math.log( stat[ "characters" ] // 5 + 1 )
+            score += math.log( stat[ "characters" ] / 5 + 1 )
 
-        if stat.get( "voice" ):
-            score += math.log( stat[ "voice" ] + ( stat.get( "stream" ) or 0 ) // 2 + 1 )
+        if stat.get( "voice" ) or stat.get( "stream" ):
+            score += math.log( ( stat.get( "voice" ) or 0 ) + ( stat.get( "stream" ) or 0 ) / 2 + 1 )
 
         rankingDict[ userId ] = round( score * 10, 2 )
 
