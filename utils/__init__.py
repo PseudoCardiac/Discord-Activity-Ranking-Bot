@@ -6,6 +6,7 @@ from .stat_reset import statReset
 from .stat_to_ranking import statToRanking
 from .reset_record import resetRecord
 from .reorder_roles import reorderRoles
+from .cut_voice import cutVoice
 
 
 __all__ = [
@@ -19,5 +20,6 @@ __all__ = [
     "statReset",
     "statToRanking",
     "resetRecord",
-    "reorderRoles"
+    "reorderRoles",
+    "cutVoice"
 ]

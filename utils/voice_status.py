@@ -2,6 +2,9 @@ import json, datetime
 
 
 def recordVoiceJoin( id: str ):
+    """
+    보이스 참여 시간을 기록한다 (멤버 참여 시 호출)
+    """
     voiceDict: dict[ str, str ]
 
     with open( "data/voice.json", 'r', encoding = "UTF-8" ) as f:
@@ -14,6 +17,9 @@ def recordVoiceJoin( id: str ):
 
 
 def addVoiceTime( id: str ):
+    """
+    보이스 참여 시간과 현재 시간의 차를 통계에 더한다 (멤버 퇴장 시 호출)
+    """
     statDict: dict[ str, dict[ str, int ] ] = {}
     voiceDict: dict[ str, str ] = {}
 
@@ -49,6 +55,9 @@ def addVoiceTime( id: str ):
 
 
 def recordStreamStart( id: str ):
+    """
+    스트림 시간을 기록한다 (스트림 시작 시 호출)
+    """
     streamDict: dict[ str, str ]
 
     with open( "data/stream.json", 'r', encoding = "UTF-8" ) as f:
@@ -61,6 +70,9 @@ def recordStreamStart( id: str ):
 
 
 def addStreamTime( id: str ):
+    """
+    스트리 시작 시간과 현재 시간의 차를 통계에 더한다 (스트림 종료 시 호출)
+    """
     statDict: dict[ str, dict[ str, int ] ] = {}
     streamDict: dict[ str, str ] = {}
 

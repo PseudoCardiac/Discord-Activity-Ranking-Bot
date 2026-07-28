@@ -1,7 +1,7 @@
 import discord, datetime
 from zoneinfo import ZoneInfo
 from discord.ext import commands, tasks
-from utils import rankingToEmbed, statReset, reorderRoles
+from utils import rankingToEmbed, statReset, reorderRoles, cutVoice
 
 
 MIDNIGHT = datetime.time(
@@ -25,7 +25,8 @@ class TaskCog( commands.Cog ):
         #     return
 
         await self.testChannel.send( embeds = rankingToEmbed( self.bot ) )
-        
+
+        cutVoice()
         statReset()
 
         mhd: discord.Guild = self.bot.get_guild( 1020825427025068123 )  # type: ignore
