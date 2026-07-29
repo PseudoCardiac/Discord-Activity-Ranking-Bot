@@ -11,6 +11,8 @@ class ReorderRolesCog( Cog ):
 
     @discord.app_commands.command( name = "역할_재정렬", description = "순위에 따라 역할을 재정렬한다" )
     async def reorderRolesCommand( self, i: discord.Interaction ):
+        await i.response.defer()
+
         await reorderRoles( self.mhd, self.pivotRole )
 
-        await i.response.send_message( "역할 재정렬됨" )
+        await i.followup.send( "역할 재정렬됨" )
