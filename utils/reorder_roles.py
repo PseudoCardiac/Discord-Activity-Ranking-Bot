@@ -25,12 +25,12 @@ async def reorderRoles( mhd: discord.Guild, pivotRole: discord.Role ):
 
         role = mhd.get_role( int( roleDict[ memberId ] ) )
         if role is None:
-            # print( f"role not found!" )
+            print( f"role not found!" )
             continue
-        # print( f"role { role.name } found!" )
+        print( f"role { role.name } found!" )
 
         await role.move( above = prev, offset = 0 )
-        # print( f"{ role.name } moved below { prev.name }!" )
+        print( f"{ role.name } moved below { prev.name }!" )
         await asyncio.sleep( 5 )
         prev = role
-        # print( f"prev role set to { role.name }!" )
+        print( f"prev role set to { role.name }!" )
