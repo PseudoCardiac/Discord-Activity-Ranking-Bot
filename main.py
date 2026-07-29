@@ -21,7 +21,7 @@ async def on_ready():
     await BOT.add_cog( StatCog( BOT ), override = True  )
     await BOT.add_cog( ReorderRolesCog( BOT ), override = True )
 
-    await BOT.tree.sync()
+    # await BOT.tree.sync()
 
     print( "Activity Ranker" )
 
