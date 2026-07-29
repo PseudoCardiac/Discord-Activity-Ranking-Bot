@@ -2,7 +2,7 @@ import discord, os
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog
+from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog, ReorderRolesCog
 from utils import addNumber, numChar, recordVoiceJoin, addVoiceTime, recordStreamStart, addStreamTime
 
 
@@ -19,8 +19,9 @@ async def on_ready():
     await BOT.add_cog( NotifChannelConfigCog(), override = True )
     await BOT.add_cog( RegisterSubaccountCog(), override = True )
     await BOT.add_cog( StatCog( BOT ), override = True  )
+    await BOT.add_cog( ReorderRolesCog( BOT ), override = True )
 
-    # await BOT.tree.sync()
+    await BOT.tree.sync()
 
     print( "Activity Ranker" )
 
