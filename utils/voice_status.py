@@ -39,6 +39,13 @@ def addVoiceTime( id: str ):
     timeDelta = datetime.datetime.now() - datetime.datetime.strptime( joinTime, "%d/%m/%Y, %H:%M:%S" )
     minutes = timeDelta.seconds // 60
 
+    with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
+        accountDict = json.load( f )
+
+    # 부계가 있는 경우 본계로 카운트
+    if accountDict.get( id ):
+        id = accountDict[ id ]
+
     if not statDict.get( id ):
         statDict[ id ] = {}
 
@@ -92,6 +99,13 @@ def addStreamTime( id: str ):
     timeDelta = datetime.datetime.now() - datetime.datetime.strptime( startTime, "%d/%m/%Y, %H:%M:%S" )
     minutes = timeDelta.seconds // 60
 
+    with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
+        accountDict = json.load( f )
+
+    # 부계가 있는 경우 본계로 카운트
+    if accountDict.get( id ):
+        id = accountDict[ id ]
+        
     if not statDict.get( id ):
         statDict[ id ] = {}
         
