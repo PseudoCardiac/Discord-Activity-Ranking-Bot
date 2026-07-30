@@ -19,11 +19,11 @@ def cutVoice():
     # 2. 동일 유저에 대해 현재 시간에 보이스 또는 스트림을 다시 시작한 것으로 기록한다.  
     for id, _ in voiceDict.items():
         addVoiceTime( id )
-        voiceDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S" )
+        voiceDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S %z" )
 
     for id, _ in streamDict.items():
         addStreamTime( id )
-        streamDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S" )
+        streamDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S %z" )
 
     # 파일 쓰기
     with open( "data/voice.json", 'w', encoding = "UTF-8" ) as f:
