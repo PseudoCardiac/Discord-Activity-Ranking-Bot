@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from discord.ext import commands
 from .stat_to_ranking import statToRanking
+from utils import minutesToHours
 
 
 def rankingToEmbed( bot: "commands.Bot" ):
@@ -63,16 +64,16 @@ def rankingToEmbed( bot: "commands.Bot" ):
             embed.add_field(
                 name = f"#{ i } { userDisplayName } · { score }점  { rankDiffText }",
                 value = f"텍스트 | { char }자, { msg }건 ({ charPerMsg }자/건)\n" + \
-                        f"보이스 | { voice }분\n" + \
-                        f"라이브 | { stream }분",
+                        f"보이스 | { minutesToHours( voice ) }\n" + \
+                        f"라이브 | { minutesToHours( stream ) }",
                 inline = False
             )
         else:
             embed2.add_field(
                 name = f"#{ i } { userDisplayName } · { score }점  { rankDiffText }",
                 value = f"텍스트 | { char }자, { msg }건 ({ charPerMsg }자/건)\n" + \
-                        f"보이스 | { voice }분\n" + \
-                        f"라이브 | { stream }분",
+                        f"보이스 | { minutesToHours( voice ) }\n" + \
+                        f"라이브 | { minutesToHours( stream ) }",
                 inline = False
             )
 
