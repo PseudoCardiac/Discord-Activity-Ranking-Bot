@@ -1,4 +1,6 @@
 import json, datetime
+from zoneinfo import ZoneInfo
+
 
 
 def recordVoiceJoin( id: str ):
@@ -10,7 +12,7 @@ def recordVoiceJoin( id: str ):
     with open( "data/voice.json", 'r', encoding = "UTF-8" ) as f:
         voiceDict = json.load( f )
 
-    voiceDict[ id ] = datetime.datetime.now().strftime( "%d/%m/%Y, %H:%M:%S" )
+    voiceDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S" )
 
     with open( "data/voice.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( voiceDict, f, indent = 4 )
@@ -36,7 +38,7 @@ def addVoiceTime( id: str ):
     else:
         del voiceDict[ id ]
 
-    timeDelta = datetime.datetime.now() - datetime.datetime.strptime( joinTime, "%d/%m/%Y, %H:%M:%S" )
+    timeDelta = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ) - datetime.datetime.strptime( joinTime, "%Y/%m/%d %H:%M:%S" )
     minutes = timeDelta.seconds // 60
 
     with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
@@ -70,7 +72,7 @@ def recordStreamStart( id: str ):
     with open( "data/stream.json", 'r', encoding = "UTF-8" ) as f:
         streamDict = json.load( f )
 
-    streamDict[ id ] = datetime.datetime.now().strftime( "%d/%m/%Y, %H:%M:%S" )
+    streamDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S" )
 
     with open( "data/stream.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( streamDict, f, indent = 4 )
@@ -96,7 +98,7 @@ def addStreamTime( id: str ):
     else:
         del streamDict[ id ]
 
-    timeDelta = datetime.datetime.now() - datetime.datetime.strptime( startTime, "%d/%m/%Y, %H:%M:%S" )
+    timeDelta = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ) - datetime.datetime.strptime( startTime, "%Y/%m/%d %H:%M:%S" )
     minutes = timeDelta.seconds // 60
 
     with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:

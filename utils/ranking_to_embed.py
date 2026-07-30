@@ -1,5 +1,7 @@
 import discord, json
 import datetime
+from zoneinfo import ZoneInfo
+
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from discord.ext import commands
@@ -18,8 +20,8 @@ def rankingToEmbed( bot: "commands.Bot" ):
     with open( "data/stat.json", 'r', encoding = "UTF-8" ) as f:
         stat = json.load( f )
 
-    year = ( datetime.datetime.now() - datetime.timedelta( days = 1 ) ).year
-    month = ( datetime.datetime.now() - datetime.timedelta( days = 1 ) ).month
+    year = ( datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ) - datetime.timedelta( days = 1 ) ).year
+    month = ( datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ) - datetime.timedelta( days = 1 ) ).month
 
     embed = discord.Embed( title = f"{ year }년 { month }월 통계" )
     embed2 = discord.Embed( title = f"{ year }년 { month }월 통계 (2페이지)" )
