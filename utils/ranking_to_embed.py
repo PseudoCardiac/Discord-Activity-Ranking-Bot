@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from discord.ext import commands
 from .stat_to_ranking import statToRanking
-from utils import minutesToHours
+from .minutes_to_hours import minutesToHours
 
 
 def rankingToEmbed( bot: "commands.Bot" ):
