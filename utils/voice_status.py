@@ -1,12 +1,16 @@
 import json, datetime, discord
 from zoneinfo import ZoneInfo
+from .get_alt_account import getAltAccount, getMainAccount
 
 
-
-def recordVoiceJoin( id: str ):
+def recordVoiceJoin( id: str, guild: discord.Guild ):
     """
     보이스 참여 시간을 기록한다 (멤버 참여 시 호출)
     """
+    mainAcc = getMainAccount( id, guild )
+    if mainAcc is not None:
+        id = str( mainAcc.id )
+
     voiceDict: dict[ str, str ]
 
     with open( "data/voice.json", 'r', encoding = "UTF-8" ) as f:
@@ -18,10 +22,14 @@ def recordVoiceJoin( id: str ):
         json.dump( voiceDict, f, indent = 4 )
 
 
-def addVoiceTime( id: str ):
+def addVoiceTime( id: str, guild: discord.Guild ):
     """
     보이스 참여 시간과 현재 시간의 차를 통계에 더한다 (멤버 퇴장 시 호출)
     """
+    mainAcc = getMainAccount( id, guild )
+    if mainAcc is not None:
+        id = str( mainAcc.id )
+
     statDict: dict[ str, dict[ str, int ] ] = {}
     voiceDict: dict[ str, str ] = {}
 
@@ -63,10 +71,14 @@ def addVoiceTime( id: str ):
         json.dump( voiceDict, f, indent = 4 )
 
 
-def recordStreamStart( id: str ):
+def recordStreamStart( id: str, guild: discord.Guild ):
     """
     스트림 시간을 기록한다 (스트림 시작 시 호출)
     """
+    mainAcc = getMainAccount( id, guild )
+    if mainAcc is not None:
+        id = str( mainAcc.id )
+
     streamDict: dict[ str, str ]
 
     with open( "data/stream.json", 'r', encoding = "UTF-8" ) as f:
@@ -78,10 +90,14 @@ def recordStreamStart( id: str ):
         json.dump( streamDict, f, indent = 4 )
 
 
-def addStreamTime( id: str ):
+def addStreamTime( id: str, guild: discord.Guild ):
     """
     스트리 시작 시간과 현재 시간의 차를 통계에 더한다 (스트림 종료 시 호출)
     """
+    mainAcc = getMainAccount( id, guild )
+    if mainAcc is not None:
+        id = str( mainAcc.id )
+
     statDict: dict[ str, dict[ str, int ] ] = {}
     streamDict: dict[ str, str ] = {}
 
@@ -127,22 +143,9 @@ async def checkVoiceStatus( id: str, guild: discord.Guild ):
     """
     주어진 계정의 본계 또는 부계가 동시 접속 중인지 확인
     """
-    with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
-        accountDict: dict[ str, str ] = json.load( f )
-
-    altAccId = None
-
-    for subAcc, mainAcc in accountDict.items():
-        if subAcc == id:
-            altAccId = mainAcc
-            break
-        elif mainAcc == id:
-            altAccId = subAcc
-            break
-    else:
-        return False
-
-    altAcc: discord.Member = guild.get_member( int( altAccId ) )    # type: ignore
+    altAcc = getAltAccount( id, guild )
+    if altAcc is None:
+        return
 
     try:
         altVoiceStatus = await altAcc.fetch_voice()
@@ -159,22 +162,9 @@ async def checkStreamStatus( id: str, guild: discord.Guild ):
     """
     주어진 계정의 본계 또는 부계가 동시 라이브 중인지 확인
     """
-    with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
-        accountDict: dict[ str, str ] = json.load( f )
-
-    altAccId = None
-
-    for subAcc, mainAcc in accountDict.items():
-        if subAcc == id:
-            altAccId = mainAcc
-            break
-        elif mainAcc == id:
-            altAccId = subAcc
-            break
-    else:
-        return False
-
-    altAcc: discord.Member = guild.get_member( int( altAccId ) )    # type: ignore
+    altAcc = getAltAccount( id, guild )
+    if altAcc is None:
+        return
 
     try:
         altVoiceStatus = await altAcc.fetch_voice()

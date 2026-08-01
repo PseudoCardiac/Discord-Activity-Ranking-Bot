@@ -8,3 +8,4 @@ from .reset_record import resetRecord
 from .reorder_roles import reorderRoles
 from .cut_voice import cutVoice
 from .minutes_to_hours import minutesToHours
+from .get_alt_account import getAltAccount, getMainAccount
