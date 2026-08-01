@@ -1,4 +1,4 @@
-import json, datetime
+import json, datetime, discord
 from zoneinfo import ZoneInfo
 
 
@@ -121,3 +121,67 @@ def addStreamTime( id: str ):
 
     with open( "data/stream.json", 'w', encoding = "UTF-8" ) as f:
         json.dump( streamDict, f, indent = 4 )
+
+
+async def checkVoiceStatus( id: str, guild: discord.Guild ):
+    """
+    주어진 계정의 본계 또는 부계가 동시 접속 중인지 확인
+    """
+    with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
+        accountDict: dict[ str, str ] = json.load( f )
+
+    altAccId = None
+
+    for subAcc, mainAcc in accountDict.items():
+        if subAcc == id:
+            altAccId = mainAcc
+            break
+        elif mainAcc == id:
+            altAccId = subAcc
+            break
+    else:
+        return False
+
+    altAcc: discord.Member = guild.get_member( int( altAccId ) )    # type: ignore
+
+    try:
+        altVoiceStatus = await altAcc.fetch_voice()
+    except:
+        return False
+    
+    if altVoiceStatus.channel is None:
+        return False
+
+    return True
+
+
+async def checkStreamStatus( id: str, guild: discord.Guild ):
+    """
+    주어진 계정의 본계 또는 부계가 동시 라이브 중인지 확인
+    """
+    with open( "data/account.json", 'r', encoding = "UTF-8" ) as f:
+        accountDict: dict[ str, str ] = json.load( f )
+
+    altAccId = None
+
+    for subAcc, mainAcc in accountDict.items():
+        if subAcc == id:
+            altAccId = mainAcc
+            break
+        elif mainAcc == id:
+            altAccId = subAcc
+            break
+    else:
+        return False
+
+    altAcc: discord.Member = guild.get_member( int( altAccId ) )    # type: ignore
+
+    try:
+        altVoiceStatus = await altAcc.fetch_voice()
+    except:
+        return False
+    
+    if not altVoiceStatus.self_stream:
+        return False
+
+    return True

@@ -24,7 +24,7 @@ class RankingBot( Bot ):
         await self.add_cog( ExportJsonCog( self ), override = True )
         await self.add_cog( VoiceStateListener( self ), override = True )
 
-        await self.tree.sync()
+        # await self.tree.sync()
 
         print( "Activity Ranker" )
 
