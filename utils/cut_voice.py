@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 from .voice_status import addVoiceTime, addStreamTime
 
 
-def cutVoice():
+def cutVoice( guild ):
     """
     현재 기록 중인 보이스와 스트림을 끊고, 통계에 더한다.
     정기 통계를 산출할 때, 점수를 내기 직전에 호출한다.
@@ -18,11 +18,11 @@ def cutVoice():
     # 1. 기록 중인 보이스와 스트림을 현재 시간에 종료된 것으로 간주하고, 통계에 기록한다.
     # 2. 동일 유저에 대해 현재 시간에 보이스 또는 스트림을 다시 시작한 것으로 기록한다.  
     for id, _ in voiceDict.items():
-        addVoiceTime( id )
+        addVoiceTime( id, guild )
         voiceDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S %z" )
 
     for id, _ in streamDict.items():
-        addStreamTime( id )
+        addStreamTime( id, guild )
         streamDict[ id ] = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).strftime( "%Y/%m/%d %H:%M:%S %z" )
 
     # 파일 쓰기

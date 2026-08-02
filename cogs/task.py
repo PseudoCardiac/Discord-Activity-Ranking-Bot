@@ -24,13 +24,13 @@ class TaskCog( commands.Cog ):
         # if not isMonday:
         #     return
 
-        cutVoice()
+        mhd: discord.Guild = self.bot.get_guild( 1020825427025068123 )  # type: ignore
+        pivotRole: discord.Role = mhd.get_role( 1527271285103792263 )   # type: ignore
+
+        cutVoice( mhd )
 
         await self.testChannel.send( embeds = rankingToEmbed( self.bot ) )
 
         statReset()
-
-        mhd: discord.Guild = self.bot.get_guild( 1020825427025068123 )  # type: ignore
-        pivotRole: discord.Role = mhd.get_role( 1527271285103792263 )   # type: ignore
 
         await reorderRoles( mhd, pivotRole )
