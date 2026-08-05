@@ -36,6 +36,9 @@ class RankingBot( Bot ):
         if msg.author.bot:
             return
 
+        if msg.channel.type == discord.ChannelType.voice:
+            return
+
         addNumber( msg.guild.id, msg.author.id, numChar( msg.content ) )
 
 

@@ -19,10 +19,10 @@ class TaskCog( commands.Cog ):
 
     @tasks.loop( time = MIDNIGHT )
     async def checkDay( self ):
-        # isMonday = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).weekday() == 0
+        is1st = datetime.datetime.now( tz = ZoneInfo( "Asia/Seoul" ) ).day == 1
 
-        # if not isMonday:
-        #     return
+        if not is1st:
+            return
 
         mhd: discord.Guild = self.bot.get_guild( 1020825427025068123 )  # type: ignore
         pivotRole: discord.Role = mhd.get_role( 1527271285103792263 )   # type: ignore
