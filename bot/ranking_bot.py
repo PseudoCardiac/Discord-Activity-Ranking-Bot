@@ -1,4 +1,4 @@
-import discord, os
+import discord, os, asyncio, tracemalloc
 from discord.ext.commands import Bot
 
 from dotenv import load_dotenv
@@ -19,6 +19,7 @@ class RankingBot( Bot ):
         NOTIF_CHANNEL: discord.TextChannel = await self.fetch_channel( notifChannelId ) # type: ignore
         self.MHD: discord.Guild = await self.fetch_guild( 1020825427025068123 )   # type: ignore
         self.PIVOT_ROLE = await self.MHD.fetch_role( 1527271285103792263 )
+        self.SCY = await self.fetch_user( 513676568745213953 )
 
         await self.add_cog( TaskCog( self, NOTIF_CHANNEL ), override = True )
         await self.add_cog( NotifChannelConfigCog(), override = True )
@@ -29,6 +30,28 @@ class RankingBot( Bot ):
         await self.add_cog( VoiceStateListener( self ), override = True )
 
         # await self.tree.sync()
+
+
+    async def memorySnapshotTask( self ):
+        snapshot1 = None
+
+        while True:
+            snapshot2 = tracemalloc.take_snapshot()
+
+            if snapshot1:
+                top_stats = snapshot2.compare_to( snapshot1, 'lineno' )
+                statMsg = "[ 메모리 증가 Top 10 ]\n"
+
+                for stat in top_stats[:10]:
+                    statMsg += statMsg + str( stat ) + '\n'
+
+                await self.SCY.send( statMsg )
+
+            else:
+                await self.SCY.send( "메모리 모니터링 개시" )
+
+            snapshot1 = snapshot2
+            await asyncio.sleep( 3600 )
 
 
     async def on_ready( self ):
