@@ -7,6 +7,9 @@ from cogs import TaskCog, NotifChannelConfigCog, RegisterSubaccountCog, StatCog,
 from utils import addNumber, numChar
 
 
+tracemalloc.start()
+
+
 class RankingBot( Bot ):
     def __init__( self ):
         super().__init__( command_prefix = "@RankingBot", intents = discord.Intents.all() )
@@ -30,6 +33,8 @@ class RankingBot( Bot ):
         await self.add_cog( VoiceStateListener( self ), override = True )
 
         # await self.tree.sync()
+
+        self.memoryTask = asyncio.create_task( self.memorySnapshotTask() )
 
 
     async def memorySnapshotTask( self ):
