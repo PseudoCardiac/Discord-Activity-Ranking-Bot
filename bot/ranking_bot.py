@@ -12,10 +12,14 @@ class RankingBot( Bot ):
         super().__init__( command_prefix = "@RankingBot", intents = discord.Intents.all() )
 
 
-    async def on_ready( self ):
+    async def setup_hook( self ):
         with open( "data/channel.txt", 'r', encoding = "UTF-8" ) as f:
             notifChannelId = int( f.read() )
-        NOTIF_CHANNEL: discord.TextChannel = self.get_channel( notifChannelId )  # type: ignore
+
+        NOTIF_CHANNEL: discord.TextChannel = await self.fetch_channel( notifChannelId ) # type: ignore
+        self.MHD: discord.Guild = await self.fetch_guild( 1020825427025068123 )   # type: ignore
+        self.PIVOT_ROLE = await self.MHD.fetch_role( 1527271285103792263 )
+
         await self.add_cog( TaskCog( self, NOTIF_CHANNEL ), override = True )
         await self.add_cog( NotifChannelConfigCog(), override = True )
         await self.add_cog( RegisterSubaccountCog(), override = True )
@@ -26,6 +30,8 @@ class RankingBot( Bot ):
 
         # await self.tree.sync()
 
+
+    async def on_ready( self ):
         print( "Activity Ranker" )
 
 
