@@ -41,24 +41,21 @@ class RankingBot( Bot ):
         snapshot1 = None
 
         while True:
-            try:
-                snapshot2 = tracemalloc.take_snapshot()
+            snapshot2 = tracemalloc.take_snapshot()
 
-                if snapshot1:
-                    top_stats = snapshot2.compare_to( snapshot1, 'lineno' )
-                    await self.SCY.send( "[ 메모리 증가 Top 10 ]" )
+            if snapshot1:
+                top_stats = snapshot2.compare_to( snapshot1, 'lineno' )
+                statMsg = "[ 메모리 증가 Top 10 ]\n"
 
-                    for stat in top_stats[:10]:
-                        await self.SCY.send( str( stat ) )
+                for stat in top_stats[:10]:
+                    statMsg += statMsg + str( stat ) + '\n'
 
-                else:
-                    await self.SCY.send( "메모리 모니터링 개시" )
+                await self.SCY.send( statMsg )
 
-                snapshot1 = snapshot2
+            else:
+                await self.SCY.send( "메모리 모니터링 개시" )
 
-            except Exception as e:
-                await self.SCY.send( f"Error: {e}" )
-
+            snapshot1 = snapshot2
             await asyncio.sleep( 3600 )
 
 
